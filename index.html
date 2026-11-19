@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="자기소개, 활동 경험, 취미를 담은 개인 웹페이지입니다.">
+  <meta name="color-scheme" content="light">
+  <title>나를 소개합니다 | Personal Space</title>
+  <style>
+    :root { --bg:#f5f5f5; --ink:#222222; --muted:#596675; --accent:#64748b; --line:#e1e5e9; --white:#ffffff; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:30px; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:"Pretendard","맑은 고딕","Apple SD Gothic Neo",sans-serif; font-size:16px; line-height:1.8; word-break:keep-all; overflow-wrap:anywhere; }
+    a { color:inherit; text-decoration:none; }
+    a:focus-visible { outline:3px solid var(--accent); outline-offset:6px; border-radius:4px; }
+    .skip { position:absolute; top:-100px; left:20px; padding:10px 20px; background:var(--white); z-index:5; }
+    .skip:focus { top:15px; }
+    .wrap { width:min(1080px,calc(100% - 80px)); margin-inline:auto; }
+    header { display:flex; align-items:center; justify-content:space-between; gap:24px; padding:31px 0; border-bottom:1px solid var(--line); }
+    .brand { font-size:16px; font-weight:750; letter-spacing:-.4px; }
+    .brand span { color:var(--accent); }
+    nav { display:flex; flex-wrap:wrap; gap:28px; font-size:14px; color:var(--muted); }
+    nav a:hover { color:var(--ink); text-decoration:underline; text-underline-offset:7px; }
+    .hero { display:grid; grid-template-columns:1fr 290px; align-items:center; gap:70px; padding:86px 0 80px; }
+    .eyebrow { margin:0 0 18px; color:var(--muted); font-size:14px; font-weight:650; letter-spacing:.16em; }
+    h1 { margin:0 0 22px; font-size:clamp(2.4rem,5.2vw,3.8rem); font-weight:650; letter-spacing:-.065em; line-height:1.28; }
+    h1 span { color:var(--accent); }
+    .intro { margin:0; color:var(--muted); font-size:18px; }
+    .hero-link { display:inline-block; margin-top:32px; padding:11px 23px; background:var(--ink); color:var(--white); border-radius:8px; font-size:14px; font-weight:600; }
+    .hero-link:hover { background:#46556b; }
+    .portrait { margin:0; text-align:center; }
+    .avatar { width:240px; height:240px; margin:auto; border-radius:50%; border:9px solid white; background:#e5e9ee; display:grid; place-items:center; box-shadow:0 12px 35px #22222209; }
+    .avatar svg { width:150px; height:150px; color:#8996a6; }
+    .portrait figcaption { margin-top:16px; color:var(--muted); font-size:14px; }
+    section { margin-bottom:62px; }
+    .section-heading { display:flex; align-items:baseline; gap:15px; margin-bottom:21px; }
+    h2 { margin:0; font-size:26px; font-weight:650; letter-spacing:-.04em; }
+    .section-heading span { color:var(--muted); font-size:14px; }
+    .about { display:grid; grid-template-columns:180px 1fr; gap:35px; background:var(--white); padding:36px 40px; border-radius:18px; box-shadow:0 4px 20px #22222203; }
+    .about-label { color:var(--accent); font-size:20px; line-height:1.6; font-weight:600; margin:0; }
+    .about-copy p { margin:0; color:var(--muted); line-height:2; }
+    .about-copy p+p { margin-top:10px; }
+    .cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+    .experience { padding:27px; border-radius:16px; background:var(--white); box-shadow:0 4px 20px #22222203; border:1px solid #ededed; }
+    .period { display:inline-block; color:#4c5d73; background:#edf0f4; padding:3px 11px; border-radius:5px; font-size:14px; }
+    h3 { margin:20px 0 12px; font-size:19px; letter-spacing:-.035em; line-height:1.6; }
+    .experience p { color:var(--muted); margin:0; }
+    .experience .role { border-top:1px solid var(--line); padding-top:16px; margin-top:25px; font-size:14px; }
+    .hobbies { margin-bottom:80px; }
+    .hobby { display:flex; align-items:flex-start; gap:17px; padding:23px 0; border-top:1px solid #d5dce3; }
+    .icon { width:44px; height:44px; border-radius:12px; display:grid; place-items:center; background:#e8edf2; color:#586b82; flex-shrink:0; }
+    .icon svg { width:23px; height:23px; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+    .hobby h3 { margin:0 0 6px; font-size:17px; }
+    .hobby p { margin:0; color:var(--muted); font-size:15px; }
+    footer { border-top:1px solid var(--line); padding:25px 0 32px; display:flex; justify-content:space-between; gap:20px; color:var(--muted); font-size:14px; }
+    footer p { margin:0; }
+    footer a:hover { text-decoration:underline; }
+    @media(max-width:760px) {
+      .wrap { width:calc(100% - 40px); }
+      header { padding:23px 0; gap:18px; align-items:flex-start; }
+      nav { gap:14px; }
+      .hero { grid-template-columns:1fr; gap:32px; padding:45px 0 50px; }
+      .portrait { grid-row:1; text-align:left; display:flex; align-items:center; gap:18px; }
+      .avatar { width:100px; height:100px; margin:0; border-width:5px; flex-shrink:0; }
+      .avatar svg { width:63px; height:63px; }
+      .portrait figcaption { margin:0; }
+      h1 { font-size:2.6rem; }
+      .about { grid-template-columns:1fr; padding:26px; gap:18px; }
+      .about-label br { display:none; }
+      .cards { grid-template-columns:1fr; gap:15px; }
+      section { margin-bottom:44px; }
+      .hobbies { margin-bottom:44px; }
+      .hobby { padding:20px 0; }
+      footer { flex-wrap:wrap; }
+    }
+    .editor { padding:16px 0; border-bottom:1px solid var(--line); }
+    .editor-actions { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+    .editor button,.photo-label { font:inherit; font-size:14px; padding:8px 15px; border:1px solid #c8d0da; background:white; color:var(--ink); border-radius:7px; cursor:pointer; }
+    .editor button:hover,.photo-label:hover { background:#e8edf2; }
+    .editor p { font-size:14px; color:var(--muted); margin:8px 0 0; }
+    [hidden] { display:none !important; }
+    [contenteditable="true"] { outline:2px dashed var(--accent); outline-offset:4px; border-radius:3px; white-space:pre-wrap; }
+    [contenteditable="true"]:focus { outline:2px solid #334155; background:#f0f4f8; }
+    img.avatar { object-fit:cover; }
+    @media print { .editor { display:none; } }
+    @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+  </style>
+</head>
+<body id="top">
+  <a class="skip" href="#main">본문으로 바로가기</a>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="#top" aria-label="처음으로">Personal Space<span>.</span></a>
+      <nav aria-label="주요 메뉴">
+        <a href="#about">소개</a><a href="#experience">활동 경험</a><a href="#hobbies">취미</a>
+      </nav>
+    </header>
+    <aside class="editor" aria-label="페이지 편집 도구">
+      <div class="editor-actions">
+        <button type="button" id="edit-toggle" aria-pressed="false">내용 수정</button>
+        <button type="button" id="save-edit" hidden>브라우저에 저장</button>
+        <button type="button" id="cancel-edit" hidden>취소</button>
+        <button type="button" id="photo-label" hidden>프로필 사진 변경</button>
+        <input id="photo-input" type="file" accept="image/png,image/jpeg,image/webp" aria-label="프로필 사진 선택" hidden>
+        <button type="button" id="download-html">수정본 HTML 내려받기</button>
+      </div>
+      <p>수정한 내용은 현재 브라우저에만 저장됩니다. GitHub에 반영하려면 수정본을 내려받아 저장소의 index.html을 교체하세요.</p>
+      <p id="edit-status" role="status" aria-live="polite">‘내용 수정’을 누르면 글과 프로필 사진을 바꿀 수 있습니다.</p>
+    </aside>
+    <main id="main">
+      <section class="hero" aria-labelledby="profile-title">
+        <div>
+          <p class="eyebrow">A LITTLE ABOUT ME</p>
+          <!-- 아래 이름과 한 줄 소개를 본인의 정보로 바꾸세요. -->
+          <h1 id="profile-title">안녕하세요.<br><span>이담희</span>입니다.</h1>
+          <p class="intro">[나를 표현하는 짧은 문장을 입력해 주세요.]</p>
+          <a class="hero-link" href="#about">조금 더 알아보기</a>
+        </div>
+        <figure class="portrait">
+          <!-- 사진 사용 시 아래 div.avatar를 다음 img로 교체하세요.
+          <img class="avatar" src="profile.jpg" alt="본인의 프로필 사진" style="object-fit:cover">
+          profile.jpg 파일은 이 HTML과 같은 폴더에 넣으세요.
+          -->
+          <div class="avatar" role="img" aria-label="프로필 사진을 넣을 자리">
+            <svg viewBox="0 0 160 160" aria-hidden="true"><circle cx="80" cy="55" r="29" fill="currentColor"/><path d="M25 142c0-36 23-55 55-55s55 19 55 55" fill="currentColor"/></svg>
+          </div>
+          <figcaption>[프로필 사진]</figcaption>
+        </figure>
+      </section>
+      <section id="about" aria-labelledby="about-title">
+        <div class="section-heading"><h2 id="about-title">자기소개</h2><span>About me</span></div>
+        <div class="about">
+          <p class="about-label">저를 조금 더<br> 소개할게요.</p>
+          <div class="about-copy">
+            <!-- 성격, 가치관, 관심 분야 등을 3~5문장으로 작성하세요. -->
+            <p>[어떤 성격을 가진 사람인지 소개해 주세요. 일상에서 중요하게 생각하는 가치와 자신만의 태도를 적어 주세요.]</p>
+            <p>[관심을 갖고 있는 분야와 그 이유를 적어 주세요. 앞으로 배우거나 도전하고 싶은 이야기를 덧붙여 주세요.]</p>
+          </div>
+        </div>
+      </section>
+      <section id="experience" aria-labelledby="experience-title">
+        <div class="section-heading"><h2 id="experience-title">활동 경험</h2><span>Experience</span></div>
+        <div class="cards">
+          <!-- 각 카드의 기간, 활동명, 내용, 역할을 수정하세요. -->
+          <article class="experience"><span class="period">[활동 기간]</span><h3>[활동 또는 프로젝트명 1]</h3><p>[참여한 활동과 직접 수행한 내용을 소개해 주세요.]</p><p class="role">담당 역할 · [역할 입력]</p></article>
+          <article class="experience"><span class="period">[활동 기간]</span><h3>[활동 또는 프로젝트명 2]</h3><p>[함께한 프로젝트와 그 과정에서 배운 점을 소개해 주세요.]</p><p class="role">담당 역할 · [역할 입력]</p></article>
+          <article class="experience"><span class="period">[활동 기간]</span><h3>[활동 또는 프로젝트명 3]</h3><p>[기억에 남는 경험과 이를 통해 얻은 것을 소개해 주세요.]</p><p class="role">담당 역할 · [역할 입력]</p></article>
+        </div>
+      </section>
+      <section id="hobbies" class="hobbies" aria-labelledby="hobbies-title">
+        <div class="section-heading"><h2 id="hobbies-title">취미와 관심사</h2><span>Beyond the everyday</span></div>
+        <div class="cards">
+          <article class="hobby"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 4h6l3 2 3-2h6v15h-6l-3 2-3-2H3zM12 6v15"/></svg></span><div><h3>[취미 1]</h3><p>[즐기는 취미와 좋아하는 이유를 적어 주세요.]</p></div></article>
+          <article class="hobby"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="3"/><path d="m8 6 2-3h4l2 3"/><circle cx="12" cy="13" r="4"/></svg></span><div><h3>[취미 2]</h3><p>[일상에서 관심을 두는 것을 소개해 주세요.]</p></div></article>
+          <article class="hobby"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3 20 7-14 4 8 3-5 5 11zM8 10l2 2 2-2"/></svg></span><div><h3>[취미 3]</h3><p>[나만의 시간을 보내는 방법을 적어 주세요.]</p></div></article>
+        </div>
+      </section>
+    </main>
+    <footer><p>© [이름]. 나의 이야기를 담은 공간.</p><a href="#top">맨 위로</a></footer>
+  </div>
+  <script>
+    (() => {
+      'use strict';
+      const $ = (id) => document.getElementById(id);
+      const fields = [...document.querySelectorAll('#profile-title span, .intro, .about-copy p, .experience .period, .experience h3, .experience p, .hobby h3, .hobby p, footer p')];
+      const key = 'personal-space:' + (document.body.dataset.storageId || location.pathname);
+      const status = (message) => { $('edit-status').textContent = message; };
+      let editing = false;
+      let previous;
+      let photoLoading = false;
+      const capture = () => ({ text: fields.map(el => el.textContent), photo: document.querySelector('img.avatar')?.getAttribute('src') || null, caption: document.querySelector('.portrait figcaption').textContent });
+      const originalAvatar = document.querySelector('.avatar').cloneNode(true);
+      const validPhoto = (src) => typeof src === 'string' && /^data:image\/(png|jpeg|webp);base64,/.test(src);
+      function setPhoto(src) {
+        const image = document.createElement('img');
+        image.className = 'avatar'; image.alt = '프로필 사진'; image.src = src;
+        document.querySelector('.avatar').replaceWith(image);
+      }
+      function restore(data) {
+        if (!data || !Array.isArray(data.text) || data.text.length !== fields.length || !data.text.every(t => typeof t === 'string')) return;
+        fields.forEach((el, i) => { el.textContent = data.text[i]; });
+        if (validPhoto(data.photo)) setPhoto(data.photo);
+        else document.querySelector('.avatar').replaceWith(originalAvatar.cloneNode(true));
+        if (typeof data.caption === 'string') document.querySelector('.portrait figcaption').textContent = data.caption;
+      }
+      function mode(active) {
+        editing = active;
+        fields.forEach(el => { if (active) el.setAttribute('contenteditable','true'); else el.removeAttribute('contenteditable'); });
+        $('edit-toggle').hidden = active;
+        $('edit-toggle').setAttribute('aria-pressed', String(active));
+        ['save-edit','cancel-edit','photo-label'].forEach(id => { $(id).hidden = !active; });
+      }
+      fields.forEach(el => el.addEventListener('paste', event => {
+        if (!editing) return;
+        event.preventDefault();
+        const selection = window.getSelection();
+        if (!selection.rangeCount) return;
+        const range = selection.getRangeAt(0);
+        if (!el.contains(range.commonAncestorContainer)) return;
+        range.deleteContents();
+        const text = document.createTextNode(event.clipboardData.getData('text/plain'));
+        range.insertNode(text); range.setStartAfter(text); range.collapse(true);
+        selection.removeAllRanges(); selection.addRange(range);
+      }));
+      fields.forEach(el => el.addEventListener('drop', event => event.preventDefault()));
+      try { const saved = localStorage.getItem(key); if (saved) { restore(JSON.parse(saved)); status('이 브라우저에 저장된 내용을 불러왔습니다.'); } }
+      catch { status('브라우저 저장소를 사용할 수 없습니다. 수정 후 HTML 내려받기를 이용해 주세요.'); }
+      $('edit-toggle').addEventListener('click', () => { previous = capture(); mode(true); status('점선 영역을 눌러 내용을 수정하세요.'); fields[0].focus(); });
+      $('save-edit').addEventListener('click', () => {
+        if (photoLoading) return;
+        // 서식이나 HTML이 저장되지 않도록 텍스트로 정리합니다.
+        fields.forEach(el => { el.textContent = el.innerText; });
+        try { localStorage.setItem(key, JSON.stringify(capture())); mode(false); status('현재 브라우저에 저장했습니다. GitHub 반영은 수정본 HTML을 업로드해야 합니다.'); }
+        catch { status('브라우저에 저장하지 못했습니다. 수정 내용은 화면에 남아 있으니 HTML을 내려받으세요.'); }
+      });
+      $('cancel-edit').addEventListener('click', () => { if (photoLoading) return; restore(previous); mode(false); status('이번 수정을 취소했습니다.'); });
+      $('photo-label').addEventListener('click', () => { if (!photoLoading) $('photo-input').click(); });
+      $('photo-input').addEventListener('change', async event => {
+        const file = event.target.files[0];
+        event.target.value = '';
+        if (!file) return;
+        if (!['image/png','image/jpeg','image/webp'].includes(file.type) || file.size > 2 * 1024 * 1024) { status('2MB 이하의 PNG, JPG, WebP 사진을 선택해 주세요.'); return; }
+        photoLoading = true;
+        ['save-edit','cancel-edit','download-html'].forEach(id => { $(id).disabled = true; });
+        try {
+          const src = await new Promise((resolve,reject) => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.onerror = reject; reader.readAsDataURL(file); });
+          const image = new Image(); image.src = src; await image.decode();
+          setPhoto(src); document.querySelector('.portrait figcaption').textContent = '';
+          status('사진을 변경했습니다. 브라우저에 저장하거나 HTML을 내려받으세요.');
+        } catch { status('사진을 읽을 수 없습니다. 다른 이미지 파일을 선택해 주세요.'); }
+        finally { photoLoading = false; ['save-edit','cancel-edit','download-html'].forEach(id => { $(id).disabled = false; }); }
+      });
+      $('download-html').addEventListener('click', () => {
+        const clone = document.documentElement.cloneNode(true);
+        clone.querySelectorAll('[contenteditable]').forEach(el => { el.textContent = el.innerText || el.textContent; el.removeAttribute('contenteditable'); });
+        clone.querySelector('body').dataset.storageId = String(Date.now());
+        clone.querySelector('#edit-toggle').hidden = false;
+        clone.querySelector('#edit-toggle').setAttribute('aria-pressed','false');
+        ['save-edit','cancel-edit','photo-label'].forEach(id => { clone.querySelector('#' + id).hidden = true; });
+        clone.querySelector('#edit-status').textContent = '‘내용 수정’을 누르면 글과 프로필 사진을 바꿀 수 있습니다.';
+        const blob = new Blob(['<!DOCTYPE html>\n' + clone.outerHTML], { type:'text/html;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a'); link.href = url; link.download = 'index.html';
+        document.body.append(link); link.click(); link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 10000);
+        status('수정본을 내려받았습니다. 이 파일을 GitHub 저장소의 index.html로 올려 주세요.');
+      });
+    })();
+  </script>
+</body>
+</html>
